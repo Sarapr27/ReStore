@@ -2,6 +2,7 @@ import React from 'react'
 
 export const navbar = () => {
   return (
-    <div>navbar</div>
+    <div>Soy un navbar</div>
+
   )
 }
