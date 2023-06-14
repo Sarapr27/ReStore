@@ -1,6 +1,7 @@
 const express = require("express");
 const app = express();
 const logger = require("morgan");
+const userRoutes = require("./Routes/userRouter");
 
 app.use(express.json()); // Para poder recibir solicitudes Http en formato Json y poder convertirlo a js
 
@@ -17,12 +18,10 @@ app.use((req, res, next) => {
 
 app.use(logger("dev")); //Middleware para que apararezca los métodos que se van usando
 
-
+app.use("/users", userRoutes);
 
 app.get("/", (req, res) => {
-  res
-    .status(200)
-    .json({ message: "Boca Papa" });
+  res.status(200).json({ message: "Boca Papa" });
 });
 
 module.exports = app;
