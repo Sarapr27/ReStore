@@ -32,48 +32,52 @@ const createPayment = async (req, res) => {
 	});
 // console.log(result);
 // 	// Guardar informacion del pago en la base de datos
-// 	const payment = new Payment({
-// 		paymentId: result.body.id,
-// 		externalReference: result.body.external_reference,
-// 		status: result.body.status,
-// 		dateCreated: result.body.date_created,
-// 		dateApproved: result.body.date_approved,
-// 		dateLastUpdated: result.body.last_updated,
-// 		transactionAmount: result.body.transaction_amount,
-// 	});
+	const payment = new Payment({
+		paymentId: result.body.id,
+		externalReference: result.body.external_reference,
+		status: result.body.status,
+		dateCreated: result.body.date_created,
+		dateApproved: result.body.date_approved,
+		dateLastUpdated: result.body.last_updated,
+		transactionAmount: result.body.transaction_amount,
+		// transactionAmount: calculateTotalAmount(products),
+	});
 
-// 	const newData = await payment.save();
+	const newData = await payment.save();
 
 	// console.log(result);
 
-	res.status(200).json(result);
+	res.status(200).json(newData);
 };
+
+// const calculateTotalAmount = (products) => {
+// 	let total = 0;
+// 	for (const product of products) {
+// 		total += product.price * product.quantity;
+// 	}
+// 	return total;
+// };
 
 //  recive el evento de pago
 const reciveWebhook = async (req, res) => {
-	const payment = req.query;
-
 	try {
-		if (payment.type === "payment") {
-			const data = await mercadopago.payment.findById(payment["data.id"]);
-			console.log(data, "pagadoooooooooooooooooo");
+		const paymentId = req.body.data.id;
+		const paymentStatus = req.body.type;
 
-			// Guardar información del pago en la base de datos
-			// const payment = new Payment({
-			// 	paymentId: data.body.id,
-			// 	externalReference: data.body.external_reference,
-			// 	status: data.body.status,
-			// 	dateCreated: data.body.date_created,
-			// 	dateApproved: data.body.date_approved,
-			// 	dateLastUpdated: data.body.last_updated,
-			// 	transactionAmount: data.body.transaction_amount,
-			// });
-			// await payment.save();
+		// Actualizar el estado del pago en la base de datos según el webhook recibido
+		const payment = await Payment.findOneAndUpdate(
+			{ paymentId: paymentId },
+			{ status: paymentStatus },
+			{ new: true }
+		);
+
+		if (!payment) {
+			return res.status(404).json({ error: "Payment not found" });
 		}
 
-		return res.status(200).json({ message: "ok" });
+		return res.status(200).send();
 	} catch (error) {
-		return res.status(500).json({ message: error.message });
+		return res.status(500).json({ error: error.message });
 	}
 };
 module.exports = {
