@@ -5,10 +5,10 @@ const userRouter = require("./userRouter");
 const carritoRouter = require("./carrito")
 const paymentsRouter = require("./payments")
 
+router.use("/", paymentsRouter);
 router.use("/categories/technology", categoryTechnology);
 router.use("/users", userRouter);
 router.use("/carrito",carritoRouter)
 
-router.use("/", paymentsRouter);
 
 module.exports = router;
