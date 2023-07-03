@@ -38,7 +38,7 @@ router.get("/Detail/:id", detailProduct);
 //-----------SearchByName-------------------------------------------------------------------------------------------------------------//
 router.get("/searchName", Search);
 //----------Rating---------------------------------------------------------------------------------------------------------------//
-router.put("/rating/:product/:user", rating);
+router.put("/rating", rating);
 
 
 router.put("/:id", upload.single("image"), modifyProduct)

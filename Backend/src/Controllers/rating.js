@@ -4,7 +4,7 @@ const UserModel = require("../Database/models/userModel");
 const rating = async (req, res) => {
   try {
     const { rate, comment } = req.body;
-    const { product, user } = req.params; // Obtener los IDs del producto y usuario de los parámetros de la URL
+    const { product, user } = req.query; // Obtener los IDs del producto y usuario de los parámetros de la URL
 
     // Buscar el producto por su ID
     const productObj = await TechModel.findById(product);

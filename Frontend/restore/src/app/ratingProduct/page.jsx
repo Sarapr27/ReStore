@@ -34,6 +34,7 @@ const Rating = ({ searchParams }) => {
 
   return (
     <div>
+      {console.log(rating, comment)}
       <Navbar />
       <div className="flex flex-col items-center">
         <div className="flex items-center mt-4">
