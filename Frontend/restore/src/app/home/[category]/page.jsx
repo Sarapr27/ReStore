@@ -23,9 +23,6 @@ async function page({ params }) {
     <>
       <Navbar />
 
-      <h2 className='bg-yellow-50 text-2xl text-center font-bold py-2 relative z-10'>
-        {categoria}
-      </h2>
       <ProductsContainer
         data={data}
         ubicaciones={ubicaciones}

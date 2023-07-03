@@ -15,6 +15,7 @@ async function Search({ searchParams }) {
   const estado = data.result.map(producto => producto.state)
   console.log(data.result.length)
   if (data.length === 0) return  <NotFound></NotFound>
+  console.log(data)
   return (
     <div>
       <Navbar></Navbar>

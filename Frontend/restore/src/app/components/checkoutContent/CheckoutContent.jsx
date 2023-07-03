@@ -64,7 +64,7 @@ export default function CheckoutContent({ session, cookieValue }) {
   };
 
   return (
-    <div className='container mx-auto px-4 py-8 flex gap-8 justify-between relative '>
+    <div className='flex-col md:flex-row container mx-auto px-4 py-8 flex gap-8 justify-between relative '>
       <div className='grid gap-8 '>
         <h1 className='text-3xl font-semibold text-blue-900'>
           ¿Cómo querés recibir o retirar tu compra?
@@ -103,7 +103,7 @@ export default function CheckoutContent({ session, cookieValue }) {
           </p>
         ) : null}
       </div>
-      <aside className='bg-slate-50 p-8 rounded-lg shadow-lg shadow-slate-300 w-[30%] flex flex-col gap-4 justify-start items-center'>
+      <aside className='bg-slate-50 p-8 rounded-lg shadow-lg shadow-slate-300  md:w-[30%] flex flex-col gap-4 justify-start items-center'>
         {cart && cart.length > 1 ? (
           <>
             <h2 className='text-xl'>Resumen de compra</h2>

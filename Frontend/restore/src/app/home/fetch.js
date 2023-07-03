@@ -8,8 +8,7 @@ export const fetchOfers = async () => {
 
 export const fetchCategory = async (category) => {
   const response = await fetch(
-    `https://re-store.onrender.com/categories/technology/categoria/${category}`,
-    { next: { revalidate: 60 } }
+    `https://re-store.onrender.com/categories/technology/categoria/${category}`,{ cache: 'no-store'}
   );
   return await response.json();
 };

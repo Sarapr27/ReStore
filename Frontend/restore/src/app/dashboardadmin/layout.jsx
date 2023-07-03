@@ -1,18 +1,16 @@
 "use client";
-import DashHeader from "../components/dashHeader/b";
 import DashSideMenu from "../components/dashSideMenu/d";
-import DashFooter from "../components/dashFooter/a";
 import { Space } from "antd";
+import { Navbar } from "../components/navbar/navbar";
 
 export default function DashboardLayout({ children }) {
   return (
     <div className="dashboard-layout">
-      <DashHeader />
+      <Navbar></Navbar>
       <Space className="SideMenuAndPageContent">
         <DashSideMenu />
       {children}
       </Space>
-      <DashFooter className="AppFooter" />
     </div>
   );
 }

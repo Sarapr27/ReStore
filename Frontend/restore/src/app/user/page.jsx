@@ -1,13 +1,13 @@
-"use client";
-import React, { useState, useEffect } from "react";
-import { Form, Input, Button, Select, DatePicker, Upload } from "antd";
-import axios from "axios";
-import { useSession } from "next-auth/react";
-import { Navbar } from "../components/navbar/navbar";
-import { useRouter } from "next/navigation";
-import Link from "next/link";
-import Swal from "sweetalert2";
-import { totalPrice } from "../helpers/totalPrice";
+'use client';
+import React, { useState, useEffect } from 'react';
+import { Form, Input, Button, Select, DatePicker, Upload } from 'antd';
+import axios from 'axios';
+import { useSession } from 'next-auth/react';
+import { Navbar } from '../components/navbar/navbar';
+import { useRouter } from 'next/navigation';
+import Link from 'next/link';
+import Swal from 'sweetalert2';
+import { totalPrice } from '../helpers/totalPrice';
 
 function usuario({ searchParams }) {
   const { data: session, status } = useSession();
@@ -15,20 +15,20 @@ function usuario({ searchParams }) {
   const [cookieValue, setCookieValue] = useState(null);
   const [readOnly, setReadOnly] = useState(true);
   const [cookieImg, setCookieImg] = useState(null);
-  const [file, setFile] = useState("");
+  const [file, setFile] = useState('');
   const [input, setInput] = useState({
-    nombre: "",
-    apellido: "",
-    email: "",
-    fechaNacimiento: "",
-    genero: "",
+    nombre: '',
+    apellido: '',
+    email: '',
+    fechaNacimiento: '',
+    genero: '',
   });
   const [newInput, setNewInput] = useState({
-    nombre: "",
-    apellido: "",
-    email: "",
-    fechaNacimiento: "",
-    genero: "",
+    nombre: '',
+    apellido: '',
+    email: '',
+    fechaNacimiento: '',
+    genero: '',
   });
 
   const [comprados, setComprados] = useState([]);
@@ -39,15 +39,15 @@ function usuario({ searchParams }) {
   useEffect(() => {
     setCookieValue(
       document.cookie
-        .split("; ")
-        .find((row) => row.startsWith("User_id"))
-        ?.split("=")[1]
+        .split('; ')
+        .find((row) => row.startsWith('User_id'))
+        ?.split('=')[1]
     );
   }, []);
 
   useEffect(() => {
-    if (!session && !document.cookie.includes("User_id")) {
-      router.push("/home");
+    if (!session && !document.cookie.includes('User_id')) {
+      router.push('/home');
     }
   }, []);
 
@@ -55,18 +55,18 @@ function usuario({ searchParams }) {
     const formData = new FormData();
 
     for (const key in newInput) {
-      if (newInput[key] === "" || newInput[key] === "undefined") continue;
+      if (newInput[key] === '' || newInput[key] === 'undefined') continue;
       else formData.append(key, newInput[key]);
     }
-    if (file) formData.append("profileImage", file);
+    if (file) formData.append('profileImage', file);
     const id = session ? session.user.id : cookieValue;
     console.log([...formData]);
     axios
       .put(`https://re-store.onrender.com/users/${id}`, formData)
       .then(() => {
         Swal.fire({
-          icon: "success",
-          title: "Cambios guardados exitosamente",
+          icon: 'success',
+          title: 'Cambios guardados exitosamente',
         });
       })
       .then(() => {
@@ -74,8 +74,8 @@ function usuario({ searchParams }) {
       })
       .catch((error) => {
         Swal.fire({
-          icon: "error",
-          title: "Algo ha salido mal, intentalo nuevamente mas tarde",
+          icon: 'error',
+          title: 'Algo ha salido mal, intentalo nuevamente mas tarde',
         });
       });
   };
@@ -191,18 +191,17 @@ function usuario({ searchParams }) {
   const handleCancelButton = () => {
     setNewInput(Input);
     handleToggleReadOnly();
-    setNewInput(input);
   };
   return (
     <>
       {console.log(comprados)}
       {console.log(session.user.id)}
       <Navbar></Navbar>
-      <div className="container mx-auto p-4">
+      <div className='container mx-auto p-4'>
         <Button onClick={readOnly ? handleToggleReadOnly : handleCancelButton}>
-          {readOnly ? "Editar perfil" : "Cancelar"}
+          {readOnly ? 'Editar perfil' : 'Cancelar'}
         </Button>
-        <Link href={"/user/ubicacion"}>
+        <Link href={'/user/ubicacion'}>
           <Button>Editar Ubicaciones</Button>
         </Link>
         <Form
@@ -210,10 +209,10 @@ function usuario({ searchParams }) {
           labelCol={{ span: 0 }}
           wrapperCol={{ span: 14 }}
         >
-          <Form.Item label="Imagen" valuePropName="file">
+          <Form.Item label='Imagen' valuePropName='file'>
             <Upload
               disabled={session ? true : false}
-              listType="picture-card"
+              listType='picture-card'
               showUploadList={false}
               customRequest={({ file }) => {
                 setFile(file);
@@ -223,8 +222,8 @@ function usuario({ searchParams }) {
               {file ? (
                 <img
                   src={URL.createObjectURL(file)}
-                  alt="Preview"
-                  style={{ width: "100%" }}
+                  alt='Preview'
+                  style={{ width: '100%' }}
                 />
               ) : (
                 <img
@@ -232,38 +231,38 @@ function usuario({ searchParams }) {
                     (session && session.user.image) ||
                     (cookieValue && cookieImg)
                   }
-                  alt="Preview"
-                  style={{ width: "100%" }}
+                  alt='Preview'
+                  style={{ width: '100%' }}
                 />
               )}
             </Upload>
           </Form.Item>
           {Object.entries(input).map(([clave, valor]) => (
             <Form.Item key={clave} label={clave}>
-              {clave === "genero" ? (
+              {clave === 'genero' ? (
                 <Select
                   onChange={(value) => handleSelectChange(value, clave)}
                   value={newInput.genero ? newInput.genero : input.genero}
                   disabled={readOnly}
-                  className="w-full"
+                  className='w-full'
                 >
-                  <Select.Option value="masculino">Masculino</Select.Option>
-                  <Select.Option value="femenino">Femenino</Select.Option>
-                  <Select.Option value="otro">Otro</Select.Option>
+                  <Select.Option value='masculino'>Masculino</Select.Option>
+                  <Select.Option value='femenino'>Femenino</Select.Option>
+                  <Select.Option value='otro'>Otro</Select.Option>
                 </Select>
-              ) : clave === "fechaNacimiento" ? (
+              ) : clave === 'fechaNacimiento' ? (
                 <DatePicker
                   onChange={(value) => handleSelectChange(value, clave)}
                   value={newInput.fechaNacimiento}
                   disabled={readOnly}
-                  className="w-full"
+                  className='w-full'
                 />
               ) : (
                 <Input
-                  disabled={clave === "email" ? true : false}
+                  disabled={clave === 'email' ? true : false}
                   readOnly={readOnly}
                   placeholder={valor}
-                  className="w-full border rounded px-3 py-2"
+                  className='w-full border rounded px-3 py-2'
                   onChange={(event) =>
                     handleSelectChange(event.target.value, clave)
                   }
@@ -273,23 +272,23 @@ function usuario({ searchParams }) {
           ))}
         </Form>
         {!readOnly && (
-          <Button onClick={handleSubmit} htmlType="submit">
+          <Button onClick={handleSubmit} htmlType='submit'>
             Guardar Cambios
           </Button>
         )}
         <div>
           {comprados.length > 0 && (
             <div>
-              <h2 className="text-2xl font-semibold mb-4">Tus productos</h2>
+              <h2 className='text-2xl font-semibold mb-4'>Tus productos</h2>
               <ul>
                 {comprados.map((producto) => (
                   <li
                     key={producto.id}
-                    className="flex justify-between items-center"
+                    className='flex justify-between items-center'
                   >
                     <span>{producto.name}</span>
                     {producto.calificado ? (
-                      <span className="text-green-500">
+                      <span className='text-green-500'>
                         Producto ya calificado
                       </span>
                     ) : (
@@ -297,14 +296,14 @@ function usuario({ searchParams }) {
                         <span> </span>
                         <Link
                           href={{
-                            pathname: "/ratingProduct/",
+                            pathname: '/ratingProduct/',
                             query: {
                               product: producto.id,
                               user: session ? session.user.id : cookieValue,
                             },
                           }}
                         >
-                          <button className="bg-blue-500 hover:bg-blue-600 text-white font-bold px-4 rounded">
+                          <button className='bg-blue-500 hover:bg-blue-600 text-white font-bold px-4 rounded'>
                             Calificar
                           </button>
                         </Link>

@@ -39,17 +39,7 @@ function DashSideMenu() {
             label: "Clientes",
             key: "/dashboardadmin/clientes",
             icon: <UserOutlined />,
-          },
-          {
-            label: "Carrousel",
-            key: "/dashboardadmin/carrousel",
-            icon: <PlusOutlined />,
-          },
-          {
-            label: "Categorias",
-            key: "/dashboardadmin/categorias",
-            icon: <AppstoreAddOutlined />,
-          },
+          }
         ]}
       ></Menu>
     </div>

@@ -19,23 +19,25 @@ import { useEffect, useState } from "react";
 
 function Pedidos() {
   
-  const router = useRouter();
-  useEffect(() => {
-    if (!document.cookie.includes("Admin")) {
-      router.push("/home");
-    }
-  }, []);
+  // const router = useRouter();
+  // useEffect(() => {
+  //   if (!document.cookie.includes("Admin")) {
+  //     router.push("/home");
+  //   }
+  // }, []);
   
   const [pedidos, setPedidos] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [flag, setFlag] = useState(false);
   const [searchText, setSearchText] = useState('');
 
 
   const getPedidos = async () => {
     const { data } = await axios.get("https://re-store.onrender.com/users/envios/all");
+    console.log(data.users)
     return data.users;
   };
+
+
 
   useEffect(() => {
     setLoading(true);
@@ -53,6 +55,7 @@ function Pedidos() {
             pagado: orden.paymentInfo.amountPaid,
             articulos: orden.orderItems,
             estado: orden.orderStatus,
+            estadoPago: orden.paymentInfo.status
           };
           newPedidos.push(newPedido);
         });
@@ -76,9 +79,15 @@ function Pedidos() {
       {
         title: "Email",
         dataIndex: "email",
+        filteredValue: [searchText],
+        onFilter: (value,record) => {
+          return (
+            record.email?.toLowerCase().includes(value.toLowerCase()))
+        },
         render: (_, record) => (
           <span style={{ color: 'green' }}>{record.email}</span>
         ),
+        
       },
       {
         title: "Nombre",
@@ -102,7 +111,7 @@ function Pedidos() {
         title: "Pagado",
         dataIndex: "pagado",
         render: (_, record) => (
-          <span style={{ color: 'gold' }}>{`$${record.pagado} USD`}</span>
+          <span>{`$${record.pagado} USD`}</span>
         ),
       },
       {
@@ -122,11 +131,20 @@ function Pedidos() {
         ),
       },
       {
-        title: "Estado",
+        title: "Estado del envio",
         dataIndex: "estado",
         render: (_, record) => (
           <Tag style={{ fontWeight: 'bold', color: 'white', backgroundColor: 'black' }}>
             {record.estado}
+          </Tag>
+        ),
+      },
+      {
+        title: "Estado del pago",
+        dataIndex: "estadoPago",
+        render: (_, record) => (
+          <Tag style={{ fontWeight: 'bold', color: 'white', backgroundColor: 'green' }}>
+            {record.estadoPago === "paid" && "Pagado"}
           </Tag>
         ),
       },
@@ -140,15 +158,16 @@ function Pedidos() {
 
 
   return (
-    <Space size={20} direction="vertical">
+    <div className="app">
+    <Space direction="vertical">
     <Typography.Title level={4}>Pedidos</Typography.Title>
     <Input.Search
       placeholder="Buscar por email"
-      value={searchText}
       onChange={e => setSearchText(e.target.value)}
-    />
+      />
     <TablePedidos />
   </Space>
+      </div>
   );
 }
 

@@ -56,7 +56,6 @@ async function Home() {
         <Suspense fallback={<div>Loading...</div>}>
           <HomeContainer data={data}></HomeContainer>
           {/* <ProductsContainer data={data} ubicaciones={ubicaciones} marcas={marcas} estado={estado}/> */}
-        <Footer/>
         </Suspense>
         {/* <HomeContainer data={data}></HomeContainer> */}
       </div>
