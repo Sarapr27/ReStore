@@ -30,8 +30,6 @@ const responsive = {
 function HomeContainer({ data }) {
   
   
-  
-  const router = useRouter()
   const { data: session, status } = useSession();
 const [email,setEmail] = useState(null)
 const [isBan, setBan] = useState(null)
@@ -66,12 +64,15 @@ useEffect(() => {
   }
 }, [isBan]);
 
+
+
+const filteredData = data.result.filter(product => product.Disabled !== true)
   
   
   
   return (
     <Carousel responsive={responsive}>
-      {data.result.map((props) => {
+      {filteredData.map((props) => {
         return (
           <Card
             name={props.name}

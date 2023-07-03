@@ -15,11 +15,11 @@ import axios from "axios";
 function Dashboard() {
   const router = useRouter();
 
-  useEffect(() => {
-    if (!document.cookie.includes("Admin")) {
-      router.push("/home");
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (!document.cookie.includes("Admin")) {
+  //     router.push("/home");
+  //   }
+  // }, []);
 
   function DashboardCard({ titulo, numero, icon }) {
     return (

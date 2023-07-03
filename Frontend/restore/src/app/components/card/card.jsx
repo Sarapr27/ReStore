@@ -10,7 +10,10 @@ function Card(data) {
 
   if (data.Disabled) return null
   const [precioConDescuento, setPrecioConDescuento] = useState(null);
+  
 
+  const categoria = Object.keys(data.subcategoria)[0]
+  console.log(categoria)
   useEffect(() => {
     const calcularPrecioConDescuento = () => {
       if (data.oferta && data.precio) {
@@ -43,7 +46,7 @@ function Card(data) {
       <div className='text-gray-500 text-sm'>
         <p>Estado: {data.estado}</p>
         <p>Marca: {data.marca}</p>
-        <p>Categoria: {data.subcategorias}</p>
+        <p>Categoria:  {categoria === "TV" ? [categoria] : Object.keys(data.subcategoria[categoria])[0] }</p>
         {data.oferta ? (
           <p className='font-medium text-base text-slate-500'>
             Precio:{' '}

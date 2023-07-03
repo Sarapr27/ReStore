@@ -66,14 +66,17 @@ function usuario({ searchParams }) {
       .then(() => {
         Swal.fire({
           icon: "success",
-          title: "Producto creado exitosamente",
+          title: "Cambios guardados exitosamente",
         });
       })
       .then(() => {
         handleToggleReadOnly();
       })
       .catch((error) => {
-        console.error("Error al cambiar los datos:", error);
+        Swal.fire({
+          icon: "error",
+          title: "Algo ha salido mal, intentalo nuevamente mas tarde",
+        });
       });
   };
 
@@ -213,6 +216,7 @@ function usuario({ searchParams }) {
               showUploadList={false}
               customRequest={({ file }) => {
                 setFile(file);
+                handleToggleReadOnly();
               }}
             >
               {file ? (

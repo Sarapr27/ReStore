@@ -35,7 +35,7 @@ export const fetchAllProducts = async () => {
 };
 
   export const fetchSearch = (search) => {
-    return fetch(`https://re-store.onrender.com/categories/technology/searchname?name=${search}`).then((res) =>
+    return fetch(`https://re-store.onrender.com/categories/technology/searchname?name=${search}`,{ cache: 'no-store' }).then((res) =>
       res.json()
     );
   };
