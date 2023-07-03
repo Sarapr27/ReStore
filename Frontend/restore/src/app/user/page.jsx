@@ -196,6 +196,7 @@ function usuario({ searchParams }) {
   return (
     <>
       {console.log(comprados)}
+      {console.log(session.user.id)}
       <Navbar></Navbar>
       <div className="container mx-auto p-4">
         <Button onClick={readOnly ? handleToggleReadOnly : handleCancelButton}>
