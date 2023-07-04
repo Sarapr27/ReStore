@@ -5,7 +5,8 @@ const {
   getAllProducts,
   getAllProductsByCategory,
   getModelCategories,
-  modifyProduct
+  modifyProduct,
+  getRatedProducts,
 } = require("../Controllers/controllersTecnologias");
 const { ofertProduct, getOfertProducts } = require("../Controllers/ofertas");
 const detailProduct = require("../Controllers/detail");
@@ -38,10 +39,10 @@ router.get("/Detail/:id", detailProduct);
 //-----------SearchByName-------------------------------------------------------------------------------------------------------------//
 router.get("/searchName", Search);
 //----------Rating---------------------------------------------------------------------------------------------------------------//
+router.get("/rated-products", getRatedProducts);
 router.put("/rating/:product/:user", rating);
 
-
-router.put("/:id", upload.single("image"), modifyProduct)
+router.put("/:id", upload.single("image"), modifyProduct);
 
 // subcatgoria
 router.get("/Computacion/:compu", getComputacion);

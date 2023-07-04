@@ -241,6 +241,17 @@ const modifyProduct = async (req, res) => {
       .json({ message: "Error al actualizar los datos del usuario" });
   }
 };
+const getRatedProducts = async (req, res) => {
+  try {
+    const productos = await TechSchema.find({ rating: { $exists: true } })
+      .select("name rating.stars rating.comments")
+      .exec();
+
+    res.json(productos);
+  } catch (error) {
+    res.status(500).json({ error: "Error al obtener los productos." });
+  }
+};
 
 module.exports = {
   postProduct,
@@ -248,4 +259,5 @@ module.exports = {
   getAllProductsByCategory,
   getModelCategories,
   modifyProduct,
+  getRatedProducts,
 };
