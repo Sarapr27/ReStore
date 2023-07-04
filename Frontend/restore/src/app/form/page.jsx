@@ -5,14 +5,13 @@ import axios from "axios";
 import { Navbar } from "../components/navbar/navbar";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import Swal from 'sweetalert2';
-
+import Swal from "sweetalert2";
 
 export default function MyForm() {
-  const { data: session,status } = useSession();
+  const { data: session, status } = useSession();
   const [categoria, setCategoria] = useState(null);
   const router = useRouter();
- 
+
   useEffect(() => {
     if (!document.cookie.includes("Admin")) {
       router.push("/login");
@@ -27,8 +26,6 @@ export default function MyForm() {
     fetchData();
   }, []);
 
- 
-
   const { TextArea } = Input;
   const { Option } = Select;
   const categorias = [
@@ -37,6 +34,7 @@ export default function MyForm() {
     { label: "Consolas y Videojuegos", value: "ConsolasyVideojuegos" },
     { label: "Celulares", value: "Celulares" },
     { label: "Cámaras y Accesorios", value: "CamarasyAccesorios" },
+    { label: "TV", value: "TV" },
   ];
 
   const subcategorias = categoria
@@ -121,11 +119,14 @@ export default function MyForm() {
     console.log(Object.fromEntries(formData.entries()));
 
     axios
-      .post("https://re-store.onrender.com/categories/technology/posteo", formData)
+      .post(
+        "https://re-store.onrender.com/categories/technology/posteo",
+        formData
+      )
       .then(() => {
         Swal.fire({
-          icon: 'success',
-          title: 'Producto creado exitosamente',
+          icon: "success",
+          title: "Producto creado exitosamente",
         });
       })
       .catch((error) => {
@@ -244,18 +245,6 @@ export default function MyForm() {
             placeholder="Escribe el precio"
             value={input.precio}
             onChange={(e) => setInput({ ...input, precio: e.target.value })}
-          />
-        </Form.Item>
-
-        <Form.Item
-          name="ubicacion"
-          label="Ubicación"
-          rules={[{ required: true, message: "Ingresa la ciudad" }]}
-        >
-          <Input
-            placeholder="Escribe la ciudad"
-            value={input.Ubicacion}
-            onChange={(e) => setInput({ ...input, Ubicacion: e.target.value })}
           />
         </Form.Item>
 

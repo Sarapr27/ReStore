@@ -2,16 +2,8 @@ const TechSchema = require("../Database/models/Technology");
 const { cloudinary } = require("../utils/cloudinary");
 
 const postProduct = async (req, res) => {
-  const {
-    name,
-    state,
-    precio,
-    subcategoria,
-    Description,
-    Marca,
-    Ubicacion,
-    Ofertas,
-  } = req.body;
+  const { name, state, precio, subcategoria, Description, Marca, Ofertas } =
+    req.body;
 
   if (!req.file) {
     return res.send("Porfavor seleccione una imagen para subir");
@@ -30,7 +22,6 @@ const postProduct = async (req, res) => {
       precio,
       Description,
       Marca,
-      Ubicacion,
       subcategoria: parsedCategoria,
       Ofertas,
     });
@@ -76,7 +67,12 @@ const getModelCategories = (req, res) => {
   let model = [
     {
       name: "TV",
-      subcategoria: [],
+      subcategoria: [
+        "Soportes",
+        "DispositivosTransmision",
+        "Accesorios",
+        "CablesYAdaptadores",
+      ],
       marca: [
         "Samsung",
         "LG",
@@ -203,15 +199,17 @@ const modifyProduct = async (req, res) => {
     const { id } = req.params;
     if (req.file) {
       const product = await TechSchema.findById(id);
-      const previousProfilePictureUrl = product.background_image
+      const previousProfilePictureUrl = product.background_image;
 
       if (previousProfilePictureUrl) {
         await cloudinary.uploader.destroy(previousProfilePictureUrl);
       }
     }
-     const cloudinaryImage = req.file && await cloudinary.uploader.upload(req.file.path, {
-      folder: "Proyecto Final",
-    });
+    const cloudinaryImage =
+      req.file &&
+      (await cloudinary.uploader.upload(req.file.path, {
+        folder: "Proyecto Final",
+      }));
     // user.profile_picture = cloudinaryImage.secure_url;
     console.log(req.file);
     const update = {
@@ -242,11 +240,10 @@ const modifyProduct = async (req, res) => {
   }
 };
 
-
 module.exports = {
   postProduct,
   getAllProducts,
   getAllProductsByCategory,
   getModelCategories,
-  modifyProduct
+  modifyProduct,
 };

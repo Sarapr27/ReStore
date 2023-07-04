@@ -25,10 +25,6 @@ const TechnologySchema = mongoose.Schema({
     type: String,
     require: true,
   },
-  Ubicacion: {
-    type: String,
-    require: true,
-  },
   Ofertas: {
     type: Number,
     default: 0,
@@ -59,7 +55,12 @@ const TechnologySchema = mongoose.Schema({
   subcategoria: {
     type: {
       TV: {
-        type: String,
+        type: {
+          Soportes: Boolean,
+          DispositivosTransmisión: Boolean,
+          Accesorios: Boolean,
+          CablesYAdaptadores: Boolean,
+        },
       },
       Computacion: {
         type: {
