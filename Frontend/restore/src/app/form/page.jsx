@@ -278,15 +278,11 @@ export default function MyForm() {
               setInput({ ...input, file });
             }}
           >
-            <div>
-              <div
-                style={{
-                  marginTop: 8,
-                }}
-              >
-                {input.file ? input.file.name : "Upload"}
-              </div>
-            </div>
+            {input.file ? (
+              <img src={URL.createObjectURL(input.file)} />
+            ) : (
+              "Upload"
+            )}
           </Upload>
         </Form.Item>
 
